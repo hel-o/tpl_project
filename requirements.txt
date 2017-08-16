@@ -1,0 +1,10 @@
+# TODO: complete the versions:
+Flask
+Flask-Migrate
+Flask-Script
+Flask-SQLAlchemy
+gunicorn
+psycopg2
+SQLAlchemy
+ujson
+redis
