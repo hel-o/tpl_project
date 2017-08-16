@@ -4,6 +4,7 @@ import redis as _redis
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy as SQLAlchemyBase
 from flask_session import Session
+from flask_talisman import Talisman
 
 
 class RedisExt(_redis.Redis):
@@ -27,6 +28,8 @@ class SQLAlchemy(SQLAlchemyBase):
 
 db = SQLAlchemy()
 
+talisman = Talisman()
+
 
 def create_app():
     import config
@@ -44,6 +47,16 @@ def create_app():
     my_app.config['SESSION_KEY_PREFIX'] = 'tpl-project'
 
     Session(my_app)
+    # securing headers:
+    csp = {
+        'default-src': "'self' 'unsafe-inline' 'unsafe-eval'",
+        'img-src': '*',
+        'connect-src': '*'
+    }
+    talisman.init_app(my_app,
+                      force_https=False,  # no hay certificado  p:
+                      session_cookie_secure=False,
+                      content_security_policy=csp)
 
     from app.frontend.views import urls_frontend
     from app.api import api_resource1
