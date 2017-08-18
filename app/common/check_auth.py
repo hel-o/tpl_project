@@ -47,3 +47,14 @@ def requires_auth(user_type, url_redirect=True):
             return f(*args, **kwargs)
         return wrapped
     return wrapper
+
+
+def csrf_protect(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        if request.method == 'POST':
+            csrf_token = session.pop('csrf_token', None)
+            if not csrf_token or not csrf_token == request.form.get('csrf_token', None):
+                abort(403)
+        return f(*args, **kwargs)
+    return wrapped

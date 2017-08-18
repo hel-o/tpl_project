@@ -16,7 +16,7 @@ def init_users():
     admin = Usuario()
     admin.nombre = 'admin'
     admin.contrasena = 'admin'
-    admin.tipo = 'A'
+    admin.tipo = 2
     db.session.add(admin)
     db.session.commit()
     print('user ADMIN created!, with id: ', admin.id)

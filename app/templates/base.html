@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoFact - Chayan Technology</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/libs/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/libs/bootstrap.min.js') }}"></script>
+    <style>
+        body {
+            padding-top: 70px;
+            background-color: #f3f3f3;
+        }
+        /*------TEMPLATE------*/
+        .navbar-inverse {
+            background-color: #2dbe60;
+            border-color: #ececec;
+        }
+        .navbar-inverse .navbar-nav>li>a {
+            color: #fff;
+        }
+        .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
+            color: #fff;
+            background-color: #038a20;
+        }
+        h2, h3 {
+            color: #3b3b3b;
+            font-weight: 300;
+        }
+        th, label {
+            color: #73879C;
+        }
+        .content-form-row {
+            margin: 0 auto;
+        }
+        .content-form {
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            /*box-shadow: 0 5px 10px rgba(0,0,0,0.5);*/
+        }
+        /*------------*/
+        .page-header {
+            margin: 0 0 20px;
+        }
+        .error-msg {
+            color: red;
+        }
+        .bootstrap-select.btn-group .dropdown-toggle .caret {
+            position: inherit !important;
+        }
+        .page-header {
+            border-bottom: 1px solid #eee;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+    {% block static %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% block menu %}{% endblock %}
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    {% block content %}{% endblock %}
+</div>
+<style>
+    {# force css: #}
+    .bootstrap-select>select {
+        display: none !important;
+    }
+    .datepicker {
+        z-index: 1090;
+    }
+</style>
+{% block js %}{% endblock %}
+</body>
+</html>

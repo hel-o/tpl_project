@@ -1,7 +1,9 @@
+import random
+import string
 from datetime import timedelta
 
 import redis as _redis
-from flask import Flask
+from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy as SQLAlchemyBase
 from flask_session import Session
 from flask_talisman import Talisman
@@ -31,6 +33,14 @@ db = SQLAlchemy()
 talisman = Talisman()
 
 
+def generate_csrf_token():
+    if 'csrf_token' not in session:
+        csrf_token = ''.join([random.choice(string.ascii_letters + string.digits)
+                              for i in range(32)])
+        session['csrf_token'] = csrf_token
+    return session['csrf_token']
+
+
 def create_app():
     import config
     my_app = Flask(__name__)
@@ -57,6 +67,8 @@ def create_app():
                       force_https=False,  # no hay certificado  p:
                       session_cookie_secure=False,
                       content_security_policy=csp)
+
+    my_app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
     from app.frontend.views import urls_frontend
     from app.api import api_resource1

@@ -13,9 +13,6 @@ class Usuario(db.Model):
     tipo = db.Column(db.Integer, nullable=False, default=TipoUsuario.ADMIN)
     estado = db.Column(db.CHAR(1), nullable=False, default='A')  # activo
 
-    def __repr__(self):
-        return u'<Usuario: {}>'.format(self.nombre)
-
     @property
     def contrasena(self):
         raise AttributeError('password is not a readable attribute')

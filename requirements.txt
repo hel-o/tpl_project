@@ -3,6 +3,7 @@ Flask
 Flask-Migrate
 Flask-Script
 Flask-SQLAlchemy
+Flask-Session
 gunicorn
 psycopg2
 SQLAlchemy
