@@ -2,13 +2,12 @@ from flask import Blueprint
 from flask.views import MethodView
 
 from app.common.check_auth import check_api_auth
-from app.common.helpers import json_response
+from app.common.api_helpers import json_response
 
 
 api_resource1 = Blueprint(
     'api_resource1',
-    __name__,
-    url_prefix='/api/v1'
+    __name__
 )
 
 

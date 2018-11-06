@@ -1,2 +1,11 @@
 # A Flask project template
-# Prefer for python3
+# Prefer for python 3.6.x
+
+
+# Put prod. scripts under deploy folder. ejm. deployment:
+
+sudo ln -sf /home/ubuntu/tpl_project/deploy/tpl_project.conf /etc/supervisord/conf.d/
+
+sudo supervisortctl reread
+sudo supervisortctl add tpl_project
+sudo supervisortctl start tpl_project

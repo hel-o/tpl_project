@@ -4,6 +4,8 @@ import decimal
 import ujson as json
 from flask import Response
 
+from .utils import format_date, format_datetime
+
 
 def json_response(obj, status_code=200, total_count=None, total_pages=None):
     response = Response(content_type='application/json;charset=utf-8')
@@ -12,9 +14,8 @@ def json_response(obj, status_code=200, total_count=None, total_pages=None):
     json_data = obj
 
     if obj:
-        if hasattr(obj, 'to_json'):
-            json_data = obj.to_json()
-        elif isinstance(obj, list) and hasattr(obj[0], '_fields'):
+        # db models:
+        if isinstance(obj, list) and hasattr(obj[0], '_fields'):
             json_data = []
             fields = obj[0].keys()
             for item in obj:
@@ -31,6 +32,11 @@ def json_response(obj, status_code=200, total_count=None, total_pages=None):
 
                     dict_[f] = value
                 json_data.append(dict_)
+        elif isinstance(obj, tuple) and hasattr(obj, '_fields'):
+            fields = obj.keys()
+            json_data = {}
+            for f in fields:
+                json_data[f] = getattr(obj, f)
 
     str_json = json.dumps(json_data, escape_forward_slashes=False)
 
@@ -45,18 +51,6 @@ def json_response(obj, status_code=200, total_count=None, total_pages=None):
         response.headers['X-total-pages'] = total_pages
 
     return response
-
-
-def format_date(date_):
-    if date_:
-        return datetime.date.strftime(date_, '%Y-%m-%d')
-    return None
-
-
-def format_datetime(datetime_):
-    if datetime_:
-        return datetime_.strftime('%Y-%m-%d %H:%M:%S')
-    return None
 
 
 def calc_total_pages(items_total, page_size=25):

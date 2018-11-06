@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app import db
+from app.extensions import db
 from app.common.constants import TipoUsuario
 
 
@@ -28,10 +28,3 @@ class Usuario(db.Model):
             if check_password_hash(user.contrasena_hash, contrasena):
                 return user
         return None
-
-    def to_json(self):
-        return {
-            'id': self.id,
-            'estado': self.estado,
-            'nombre': self.nombre
-        }

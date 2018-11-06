@@ -1,10 +1,9 @@
-from flask import (Blueprint, render_template, session,
-                   redirect, url_for, request)
+from flask import Blueprint, render_template, session, redirect, url_for, request
 from flask.views import MethodView
 
-from app.common.models import Usuario
 from app.common.check_auth import csrf_protect
 from app.common.constants import TipoUsuario
+from app.common.models import Usuario
 
 
 urls_frontend = Blueprint(
@@ -48,7 +47,5 @@ def home():
 
 @urls_frontend.route('/salir')
 def logout_view():
-    session.pop('nombre', None)
-    session.pop('tipo', None)
-    session.pop('usuario_id', None)
+    session.clear()
     return redirect(url_for('.login'))

@@ -1,9 +1,9 @@
 from functools import wraps
 
-from flask import (request, abort, current_app, g, session, redirect, url_for)
-from itsdangerous import (JSONWebSignatureSerializer as Serializer,
-                          BadSignature)
+from itsdangerous import BadSignature
+from flask import request, abort, g, session, redirect, url_for
 
+from app.extensions import jws_serializer
 from app.common.constants import TipoUsuario
 
 
@@ -16,9 +16,8 @@ def check_api_auth(f):
         if 'Authorization' not in request.headers.keys():
             abort(401)
         else:
-            serializer = Serializer(current_app.config['SECRET_KEY'])
             try:
-                g.token_values = serializer.loads(request.headers['Authorization'])
+                g.token_values = jws_serializer.loads(request.headers['Authorization'])
             except BadSignature:
                 abort(401)
         return f(*args, **kwargs)

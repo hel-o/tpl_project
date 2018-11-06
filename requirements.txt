@@ -6,7 +6,5 @@ Flask-SQLAlchemy
 Flask-Session
 gunicorn
 psycopg2
-SQLAlchemy
 ujson
 redis
-flask-talisman

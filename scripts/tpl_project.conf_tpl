@@ -1,0 +1,9 @@
+[program:tpl_project]
+environment=APP_CONFIG="/home/ubuntu/settings.py",APP_BIND="127.0.0.1:5000"
+command=/home/ubuntu/tpl_project/tpl_project.sh
+directory=/home/ubuntu/tpl_project
+autostart=true
+autorestart=true
+stopsignal=TERM
+stderr_logfile=/var/log/supervisor/tpl_project.err.log
+stdout_logfile=/var/log/supervisor/tpl_project.out.log
